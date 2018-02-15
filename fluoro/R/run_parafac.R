@@ -24,4 +24,11 @@ run.parafac=function(corr.eem){
     ex.cut=as.numeric(rownames(expanded.eem[i,]))+cut.th
     expanded.eem[i, as.numeric(colnames(expanded.eem))<ex.cut]=NA
   }
-}
+
+  ## STEP 3 - Run the damn model already
+  # Needs the expanded eem, number of factors to model on
+
+
+  }
+
+
