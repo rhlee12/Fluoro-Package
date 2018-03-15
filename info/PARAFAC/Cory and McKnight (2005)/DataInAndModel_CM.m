@@ -11,7 +11,7 @@
 
 ex = 240:10:450; %Type in the ex and em ranges and increments that you collected your samples at
 em = 300:2:550;
-% 
+%
 % e cut). Must be a multiple of 5!
 
 %This code creates the bigMatrix for modeling
@@ -134,7 +134,7 @@ ifile = sprintf('%s%s', char(names(i,1)));
     close
 
 end
-    
+
 clear M E Oldload; %Step 15
 
 
@@ -155,5 +155,5 @@ save 'A.txt' A -ascii -double -tabs;  %Step 17
 save 'B.txt' B -ascii -double -tabs;  %Step 17
 save 'C.txt' C -ascii -double -tabs;  %Step 17
 clear A B C Fmax;
-      
+
 

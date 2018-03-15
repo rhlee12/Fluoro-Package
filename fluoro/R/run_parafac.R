@@ -1,4 +1,17 @@
-
+#' @title Perform PARAFAC Modeling on Corrected EEMs
+#'
+#' @author
+#'
+#' @details
+#'
+#' @param \code{} -
+#'
+#' @return
+#'
+#' @example
+#'
+#' #export when finished
+#'
 cut.th=20
 
 run.parafac=function(corr.eem){

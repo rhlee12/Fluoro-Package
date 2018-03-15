@@ -1,6 +1,26 @@
-sample.name=file.name
+#' @title Plot a corrected EEM
+#'
+#' @author Robert Lee
+#'
+#' @details
+#'
+#' @param \code{corr.eem} - A corrected EEM
+#' @param \code{sample.name} - The name associated with the sample
+#' @param \code{save.dir} - The directory to save the EEM plot to.
+#'
+#' @return
+#'
+#' @example
+#' \dontrun{
+#' corr.eem=read.corr.eem(system.file("extdata", "corr_eem.csv", package = "fluoro"))
+#' eem.plot(corr.eem, sample.name="Example EEM", save.dir=tempdir())
+#' }
+#'
+#' @export
+#'
 
-plot.eem=function(corr.eem, sample.name){
+
+eem.plot=function(corr.eem, sample.name, save.dir){
 
     library(ggplot2)
     library(akima)
@@ -25,7 +45,7 @@ plot.eem=function(corr.eem, sample.name){
 
     gdat=data.frame(akima::interp2xyz(gdat, data.frame = T))
 
-    ggplot2::ggplot(data=gdat)+ggplot2::aes(x = x, y = y, z = z, fill = z, name="") +
+    plot=ggplot2::ggplot(data=gdat)+ggplot2::aes(x = x, y = y, z = z, fill = z, name="") +
         ggplot2::geom_tile() +
         ggplot2::coord_equal() +
         ggplot2::geom_contour(color = "white", alpha = 0.5, bins=40) +
@@ -34,5 +54,7 @@ plot.eem=function(corr.eem, sample.name){
         ggplot2::xlab("Emission wavelength (nm)")+
         ggplot2::ylab("Excitation wavelength (nm)")+
         ggplot2::ggtitle(sample.name)+
-        ggplot2::theme(legend.title=element_blank(), legend.key.height = unit(3, "line"))
+        ggplot2::theme(legend.title=element_blank(), legend.key.height = unit(3, "line"))+
+        ggplot2::theme(aspect.ratio=1)
+    return(plot)
 }
