@@ -2,7 +2,8 @@
 #'
 #' @author Robert Lee
 #'
-#' @details
+#' @details - Given a corrected EEM, the desired sample name, and where the output
+#' plot should be saved, a plotted EEM is returned.
 #'
 #' @param \code{corr.eem} - A corrected EEM
 #' @param \code{sample.name} - The name associated with the sample

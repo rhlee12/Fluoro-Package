@@ -17,7 +17,8 @@ eem.plot(corr.eem, sample.name, save.dir)
 
 }
 \details{
-
+- Given a corrected EEM, the desired sample name, and where the output
+plot should be saved, a plotted EEM is returned.
 }
 \author{
 Robert Lee
