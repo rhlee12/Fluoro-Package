@@ -40,7 +40,7 @@
 #### FUNCTION START ####
 
 f4.eem.correct=function(eem.file, blank.file, abs.file, raman.file, save.name, save.dir, dil.fact=1, uv.path.length=1){
-
+options(stringsAsFactors = F)
     #read in files
     raw.eem=read.delim(eem.file, header = F)
     blank=read.delim(blank.file, header = F)
