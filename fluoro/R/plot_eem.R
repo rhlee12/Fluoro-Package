@@ -20,17 +20,21 @@
 #' @export
 #'
 
-
 eem.plot=function(corr.eem, sample.name, save.dir){
 
     library(ggplot2)
     library(akima)
+
+    if(missing(sample.name)){
+        sample.name=""
+    }
 
     #colnames(corr.eem)
     plot.eem=data.frame(ex.wl=rownames(corr.eem), corr.eem)
     #test=reshape2::dcast(data=plot.eem, formula = )
     test=reshape2::melt(data = plot.eem, id.vars="ex.wl")
 
+    #get rid of melting artefacts
     test$variable=as.character(gsub(pattern = "X", replacement = "", x = test$variable))
     colnames(test)=c("Emission", "Excitation", "Value")
     test$Emission=as.numeric(test$Emission)
@@ -46,7 +50,7 @@ eem.plot=function(corr.eem, sample.name, save.dir){
 
     gdat=data.frame(akima::interp2xyz(gdat, data.frame = T))
 
-    plot=ggplot2::ggplot(data=gdat)+ggplot2::aes(x = x, y = y, z = z, fill = z, name="") +
+    eem.plot=ggplot2::ggplot(data=gdat)+ggplot2::aes(x = x, y = y, z = z, fill = z, name="") +
         ggplot2::geom_tile() +
         ggplot2::coord_equal() +
         ggplot2::geom_contour(color = "white", alpha = 0.5, bins=40) +
@@ -57,5 +61,15 @@ eem.plot=function(corr.eem, sample.name, save.dir){
         ggplot2::ggtitle(sample.name)+
         ggplot2::theme(legend.title=element_blank(), legend.key.height = unit(3, "line"))+
         ggplot2::theme(aspect.ratio=1)
-    return(plot)
+    if(!missing(save.dir)){
+        if(dir.exists(save.dir)){
+            ggplot2::ggsave(plot = eem.plot, filename = paste0(sample.name, ".png"), device = "png", path = save.dir, dpi = 600)
+        }
+        if(!dir.exists(save.dir)){
+            message("Invalid save directory- please check your save directory and try again.")
+        }
+    }
+
+    return(eem.plot)
+
 }

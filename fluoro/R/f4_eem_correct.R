@@ -119,7 +119,6 @@ options(stringsAsFactors = F)
     ## Perform dillution factor
     corr.eem=Asub*dil.fact
 
-    write.csv(x = corr.eem, file = paste0(save.dir, save.name, ".csv"), row.names = F)
     rownames(corr.eem)=em.seq ## ADDS LABELS to CORR EEM
     colnames(corr.eem)=ex.seq ## ADDS LABELS to CORR EEM
 
