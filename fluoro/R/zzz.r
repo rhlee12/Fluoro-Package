@@ -1,3 +1,3 @@
 .onLoad()=function(libname, pkgname){
-    options(stringsAsFactors = F)
+    #options(stringsAsFactors = F)
 }

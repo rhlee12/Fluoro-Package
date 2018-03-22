@@ -5,7 +5,7 @@ Version: 0.0.3
 Author: Robert Lee
 Maintainer: Robert Lee <rhlee@colorado.edu>
 Description: 
-Depends: hellno
+Depends: 
 License: MIT
 Encoding: UTF-8
 LazyData: true
