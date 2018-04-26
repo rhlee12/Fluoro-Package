@@ -1,0 +1,79 @@
+---
+title: "Corrections"
+author: "MAGGIE BOWMAN"
+date: "April 24, 2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+setwd("C:/Users/maggi/Desktop/180316")
+library("ggplot2")
+library("gplots")
+library("fields")
+library("lattice")
+library("EEM")
+library(eemR)
+library(plotly)
+```
+
+## READING IN EEMS FOR CORRECTION
+
+
+
+```{r}
+SAMPLEHOLDER <- read.delim("BLNKSMPLHLDR.dat", header=FALSE, skip=2)
+SAMPLEHOLDER$V1<-NULL
+
+BBWMO1 <- read.delim("BBWMO1.dat", header=FALSE, skip=2)
+BBWMO1$V1<-NULL
+
+A<-BBWMO1-SAMPLEHOLDER
+colnames(A) <- seq(240, 500, length.out = ncol(A))
+rownames(A) <- seq(300, 600, length.out = nrow(A))
+
+dim(A)
+A2<-data.matrix(A, rownames.force = TRUE)
+dimnames(A2)
+
+x <- seq(240, 500, length.out = ncol(A2))
+y <- seq(300, 600, length.out = nrow(A2))
+
+tA2<-t(A2)
+rownames(tA2) <- seq(240, 500, length.out = nrow(tA2))
+colnames(tA2) <- seq(300, 600, length.out = ncol(tA2))
+dimnames(tA2)
+
+tx<- seq(240, 500, length.out = nrow(tA2))
+ty <- seq(300, 600, length.out = ncol(tA2))
+
+matrix.axes<-function(A2){x <- axis(side=1, at=x, labels = colnames(A2)); y <- axis(side=2, at=y, labels = rownames(A2))}
+
+.filled.contour(x,y, A2)
+
+contour(A2, xlim=240:500:10)
+
+
+image.plot(A2,zlim = range(0:300000, finite = TRUE))
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r}
+
+p<-plot_ly(x = seq(240,500, 10), y= seq(300, 600, 2), z=A2, type="contour", colorscale="jet", autocontour=T)
+p
+
+tA2<-t(A2)
+tp<-plot_ly(x= seq(240, 500, length.out = nrow(tA2)),y=seq(300, 600, length.out = ncol(tA2)),z=tA2, type="contour", colorscale="jet", autocontour=T)
+tp
+
+p11<-plot_ly(z=A2, type="contour", colorscale="jet", autocontour=T)
+p11
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
