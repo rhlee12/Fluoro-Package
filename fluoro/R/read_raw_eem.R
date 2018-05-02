@@ -1,3 +1,16 @@
+#' @title Load a Raw EEM
+#'
+#' @author Robert Lee
+#'
+#' @details Loads a raw (uncorrected) EEM into R for use with other \code{fluoro} functions.
+#'
+#' @param \code{file} - The file path to the raw eem file. Should be tab-separated data.
+#' @return An EEM in the format required by \code{fluoro}.
+#'
+#' @export
+#'
+#'
+
 read.raw.eem=function(file){
     raw=read.delim(file)
     rows=raw[,1][-1]
