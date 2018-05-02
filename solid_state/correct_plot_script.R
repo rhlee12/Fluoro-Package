@@ -1,10 +1,13 @@
+## This script takes an input XLS, performs the indicated subtractions,
+#  Rayleigh masks it, and saves a plot of the final EEM.
+
+# FILE NAME CLEANUP
 # #Trim out the spaces, so that the Excel sheet will work
 # rename=data.frame(original=list.files("../180316/", full.names = T),
 #                   rename=gsub(list.files("../180316/", full.names = T),
 #                               replacement = "", pattern = " "))
 #
 # file.rename(from=rename$original, to=rename$rename)
-#
 
 
 input=readxl::read_excel(path = "../F4SPF_LOG SHEET_BBWM_180426.xlsx")
