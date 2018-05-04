@@ -21,6 +21,8 @@
 #### FUNCTION START ####
 batch.correct=function(eem.dir){
 
+    options(stringsAsFactors = F)
+
     build.input=function(eem.dir){
         sub.dirs=list.dirs(path = eem.dir,recursive = F, full.names = F)
         contents=list.files(path = eem.dir, full.names = T, recursive = T)
