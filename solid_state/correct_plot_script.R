@@ -46,9 +46,17 @@ for(g in 1:length(grps)){
     sample=grps[g]
     files=paste0("../180316/corrected/", input$`Corrected Name`[input$`Name of Raw EEM`==sample], ".csv")
     names=input$`Corrected Name`[input$`Name of Raw EEM`==sample]
-    for(f in 1:length(files)){
-        p.eem=read.corr.eem(file = files[f])
+
+    info=data.frame(files, names)
+
+    make.plot=function(info){
+        p.eem=read.corr.eem(file = info$files)
         p.eem.out=rayleigh.mask(p.eem)
-        eem.plot(corr.eem = p.eem.out, sample.name = names[f], save.dir = "../180316/corrected/")
+        eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = tempdir())
+        return(eem.plot)
     }
+
+    plots=lapply(seq(nrow(info)), function(x) make.plot(info[x,]))
+    gridded=gridExtra::grid.arrange(grobs=plots, ncol=2)
+    ggsave(filename = sample, plot = gridded, device = "png", path = "../180316/corrected/", width = 8.5, units = "in", height = 11, dpi = 300)
 }
