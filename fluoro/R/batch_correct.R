@@ -66,7 +66,7 @@ batch.correct=function(eem.dir){
         index$dil.fact[is.na(index$dil.fact)]=1
         index$dil.fact = as.numeric(gsub(x=index$dil.fact, pattern = "dil", replacement = ""))
 
-        index=index[-which(is.na(index$eems.dir)),]
+        #index=index[-which(is.na(index$eems.dir)),]
 
         return(index)
     }
@@ -98,6 +98,7 @@ batch.correct=function(eem.dir){
                 writeLines(text = log.entry, con = log.con)
             }
         }
+        print(f)
         if(!is.na(input$uv.file[f])){
             corr.eem=fluoro::f4.eem.correct(eem.file = paste0(eem.dir,"/", input$eems.dir[f]),
                                    blank.file = input$blank[f],
