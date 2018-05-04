@@ -66,7 +66,7 @@ batch.correct=function(eem.dir){
         index$dil.fact[is.na(index$dil.fact)]=1
         index$dil.fact = as.numeric(gsub(x=index$dil.fact, pattern = "dil", replacement = ""))
 
-        #index=index[-which(is.na(index$eems.dir)),]
+        index=index[-which(is.na(index$eems.dir)),]
 
         return(index)
     }
@@ -74,6 +74,9 @@ batch.correct=function(eem.dir){
     input=build.input(eem.dir = eem.dir)
     top.save.dir=paste0(eem.dir, "/corrected/")
     if(!dir.exists(top.save.dir)){dir.create(top.save.dir)}
+
+    write.csv(x = input, file = paste0(top.save.dir, "input_file.csv"), row.names = F)
+
     for(g in 1:length(unique(input$group.x))){
         dir.create(paste0(top.save.dir, unique(input$group.x)[g], "/"))
     }
@@ -106,8 +109,7 @@ batch.correct=function(eem.dir){
                                    raman.file = input$raman[f],
                                    save.name = input$save.name[f],
                                    save.dir = paste0(top.save.dir, input$group.x[f], "/"),
-                                   dil.fact=input$dil.fact[f]
-            )
+                                   dil.fact=input$dil.fact[f])
             fluoro::make.indicies(corr.eem = corr.eem, uv.file = input$uv.file[f], save.dir = top.save.dir)
         }
     }

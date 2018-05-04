@@ -8,7 +8,7 @@
 #                               replacement = "", pattern = " "))
 #
 # file.rename(from=rename$original, to=rename$rename)
-
+options(stringsAsFactors = F)
 
 input=readxl::read_excel(path = "../F4SPF_LOG SHEET_BBWM_180426.xlsx")
 #View(input)
@@ -34,13 +34,13 @@ for(i in 1:nrow(input)){
     }
     save.name=input$`Corrected Name`[i]
     write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
-
+    fluoro::solid.indicies(corr.eem = out, sample = save.name, save.dir = save.dir)
 
 }
 
 
 corrected=list.files(path="../180316/corrected/")
-grouping=data.frame(group=input$`Name of Raw EEM`, corrected=corrected, plot.title=input$`Notes Column`)
+grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, "_c.csv") , plot.title=input$`Notes Column`)
 
 grps=unique(grouping$group)
 

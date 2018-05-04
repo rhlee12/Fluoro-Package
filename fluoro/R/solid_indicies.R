@@ -34,10 +34,11 @@
 #### FUNCTION START ####
 
 solid.indicies=function(corr.eem, sample, save.dir){
+    options(stringsAsFactors = F)
     #uv=read.csv(uv.file, header = T)
     indicies=data.frame(
         Sample.ID=sample,
-       # Abs.254=round(uv[uv[,1]=="254",2], digits = 3),
+        # Abs.254=round(uv[uv[,1]=="254",2], digits = 3),
         Max.Em.370=max(corr.eem$`370`),
         FI=fluoro::fi.calc(corr.eem = corr.eem),
         HIX=fluoro::hix.calc(corr.eem = corr.eem),
@@ -47,9 +48,9 @@ solid.indicies=function(corr.eem, sample, save.dir){
     if(!file.exists(paste0(save.dir, "/ss_indicies.csv"))){
         write.csv(x = indicies, file = paste0(save.dir, "/ss_indicies.csv"), row.names = F)
     }
-    else if(file.exists(paste0(save.dir, "/ss_indicies.csv"))){
+    if(file.exists(paste0(save.dir, "/ss_indicies.csv"))){
         temp=read.csv(file = paste0(save.dir, "/ss_indicies.csv"))
         indicies=rbind(temp, indicies)
-        write.csv(x=temp, file = paste0(save.dir, "/ss_indicies.csv"), row.names = F)
+        write.csv(x=indicies, file = paste0(save.dir, "/ss_indicies.csv"), row.names = F)
     }
 }
