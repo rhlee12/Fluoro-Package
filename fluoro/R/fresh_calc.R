@@ -23,7 +23,8 @@
 
 fresh.calc=function(corr.eem){
     exp.eem=fluoro::expand.eem(corr.eem)
-    fresh = round(exp.eem[
+    fresh = round(
+        exp.eem[
         which(rownames(exp.eem)=="380"),
         colnames(exp.eem)=="310"]/
 
@@ -31,7 +32,8 @@ fresh.calc=function(corr.eem){
                 exp.eem[(as.numeric(rownames(exp.eem))>=420&
                              436>=as.numeric(rownames(exp.eem))),
                         colnames(exp.eem)=="310"]
-            ), digits = 3
+            ),
+        digits = 3
     )
     return(fresh)
 }
