@@ -40,11 +40,7 @@ for(i in 1:nrow(input)){
 
 
 corrected=list.files(path="../180316/corrected/")
-<<<<<<< HEAD
-grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, ".csv"), plot.title=input$`Notes Column`)
-=======
 grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, "_c.csv") , plot.title=input$`Notes Column`)
->>>>>>> ad35017c66cf4c453f58e6a608766e27a7fe1a24
 
 grps=unique(grouping$group)
 
@@ -58,11 +54,11 @@ for(g in 1:length(grps)){
     make.plot=function(info){
         p.eem=read.corr.eem(file = info$files)
         p.eem.out=rayleigh.mask(p.eem)
-        eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = tempdir())
+        eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = "../180316/corrected/")
         return(eem.plot)
     }
 
     plots=lapply(seq(nrow(info)), function(x) make.plot(info[x,]))
     gridded=gridExtra::grid.arrange(grobs=plots, ncol=2)
-    ggsave(filename = sample, plot = gridded, device = "png", path = "../180316/corrected/", width = 8.5, units = "in", height = 11, dpi = 300)
+    ggsave(filename = paste0(sample,".png"), plot = gridded, device = "png", path = "../180316/corrected/", width = 8.5, units = "in", height = 11, dpi = 300)
 }
