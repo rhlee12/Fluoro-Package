@@ -1,7 +1,7 @@
 Package: fluoro
 Type: Package
 Title: Perform EEM Correction and PARAFAC Modeling in R
-Version: 0.1.0
+Version: 0.1.3
 Author: Robert Lee
 Maintainer: Robert Lee <rhlee@colorado.edu>
 Description: 
@@ -13,3 +13,4 @@ RoxygenNote: 6.0.1
 Imports: 
     akima,
     ggplot2,
+    pracma

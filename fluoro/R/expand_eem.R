@@ -21,14 +21,13 @@
 #'
 #' @export
 #'
-#'
-#'
+
 expand.eem=function(eem){
 
     temp.exp=lapply(seq(from=300, to=600, by=2),
                     function(u)
                         akima::aspline(x=as.numeric(colnames(eem)),
-                                       y = corr.eem[rownames(eem)==u,],
+                                       y = eem[rownames(eem)==u,],
                                        xout = seq(from=240, to = 450, by=1)
                         )
     )

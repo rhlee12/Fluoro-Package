@@ -34,13 +34,17 @@ for(i in 1:nrow(input)){
     }
     save.name=input$`Corrected Name`[i]
     write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
-
+    fluoro::solid.indicies(corr.eem = out, sample = save.name, save.dir = save.dir)
 
 }
 
 
 corrected=list.files(path="../180316/corrected/")
+<<<<<<< HEAD
 grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, ".csv"), plot.title=input$`Notes Column`)
+=======
+grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, "_c.csv") , plot.title=input$`Notes Column`)
+>>>>>>> ad35017c66cf4c453f58e6a608766e27a7fe1a24
 
 grps=unique(grouping$group)
 

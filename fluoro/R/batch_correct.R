@@ -21,6 +21,8 @@
 #### FUNCTION START ####
 batch.correct=function(eem.dir){
 
+    options(stringsAsFactors = F)
+
     build.input=function(eem.dir){
         sub.dirs=list.dirs(path = eem.dir,recursive = F, full.names = F)
         contents=list.files(path = eem.dir, full.names = T, recursive = T)
@@ -72,6 +74,9 @@ batch.correct=function(eem.dir){
     input=build.input(eem.dir = eem.dir)
     top.save.dir=paste0(eem.dir, "/corrected/")
     if(!dir.exists(top.save.dir)){dir.create(top.save.dir)}
+
+    write.csv(x = input, file = paste0(top.save.dir, "input_file.csv"), row.names = F)
+
     for(g in 1:length(unique(input$group.x))){
         dir.create(paste0(top.save.dir, unique(input$group.x)[g], "/"))
     }
@@ -96,6 +101,7 @@ batch.correct=function(eem.dir){
                 writeLines(text = log.entry, con = log.con)
             }
         }
+        print(f)
         if(!is.na(input$uv.file[f])){
             corr.eem=fluoro::f4.eem.correct(eem.file = paste0(eem.dir,"/", input$eems.dir[f]),
                                    blank.file = input$blank[f],
@@ -103,8 +109,7 @@ batch.correct=function(eem.dir){
                                    raman.file = input$raman[f],
                                    save.name = input$save.name[f],
                                    save.dir = paste0(top.save.dir, input$group.x[f], "/"),
-                                   dil.fact=input$dil.fact[f]
-            )
+                                   dil.fact=input$dil.fact[f])
             fluoro::make.indicies(corr.eem = corr.eem, uv.file = input$uv.file[f], save.dir = top.save.dir)
         }
     }

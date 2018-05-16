@@ -1,0 +1,68 @@
+## This script takes an input XLS, performs the indicated subtractions,
+#  Rayleigh masks it, and saves a plot of the final EEM.
+
+# FILE NAME CLEANUP
+##Trim out the spaces, so that the Excel sheet will work
+#rename=data.frame(original=list.files("../180516/", full.names = T),
+#                  rename=gsub(list.files("../180516/", full.names = T),
+#                             replacement = "", pattern = " "))
+#
+#file.rename(from=rename$original, to=rename$rename)
+library(fluoro)
+
+options(stringsAsFactors = F)
+
+input=readxl::read_excel(path = "../F4SPF_LOG SHEET_BBWM_180516.xlsx")
+#View(input)
+
+input$Blank=stringr::str_split(input$Blank, pattern = ", ")
+
+save.dir="../180516/corrected/"
+if(!dir.exists(save.dir)){dir.create(save.dir)}
+
+for(i in 1:nrow(input)){
+    print(paste0("ROW ", i))
+    print(input$`Name of Raw EEM`[i])
+
+
+    sample=fluoro::read.raw.eem(file = paste0("../180516/", input$`Name of Raw EEM`[i], ".dat"))
+    corrections=input$Blank[i]
+    print(corrections)
+    out=sample
+
+    for(c in 1:length(corrections)){
+        print(paste0("Issue:",unlist(corrections)[c]))
+        out=out-read.raw.eem(paste0("../180516/", unlist(corrections)[c], ".dat"))
+    }
+    save.name=input$`Corrected Name`[i]
+    write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
+
+
+}
+
+
+corrected=list.files(path="../180516/corrected/")
+grouping=data.frame(group=input$`Name of Raw EEM`, corrected=paste0(input$`Corrected Name`, ".csv"), plot.title=input$`Notes Column`)
+
+grps=unique(grouping$group)
+
+for(g in 1:length(grps)){
+    sample=grps[g]
+    files=paste0("../180516/corrected/", input$`Corrected Name`[input$`Name of Raw EEM`==sample], ".csv")
+    names=input$`Corrected Name`[input$`Name of Raw EEM`==sample]
+
+    info=data.frame(files, names)
+
+    make.plot=function(info){
+        p.eem=read.corr.eem(file = info$files)
+        p.eem.out=rayleigh.mask(p.eem)
+        eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = tempdir())
+        return(eem.plot)
+    }
+
+    plots=lapply(seq(nrow(info)), function(x) make.plot(info[x,]))
+    gridded=gridExtra::grid.arrange(grobs=plots, ncol=2)
+    ggsave(filename = sample, plot = gridded, device = "png", path = "../180516/corrected/", width = 8.5, units = "in", height = 11, dpi = 300)
+}
+
+

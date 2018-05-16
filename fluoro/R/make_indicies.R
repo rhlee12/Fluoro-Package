@@ -46,13 +46,14 @@ make.indicies=function(corr.eem, uv.file, save.dir){
         HIX=fluoro::hix.calc(corr.eem = corr.eem),
         Freshness=fluoro::fresh.calc(corr.eem=corr.eem)
     )
+    indx.file=paste0(save.dir, "/indicies.csv")
 
     if(!file.exists(paste0(save.dir, "/indicies.csv"))){
         write.csv(x = indicies, file = paste0(save.dir, "/indicies.csv"), row.names = F)
     }
-    else if(file.exists(paste0(save.dir, "/indicies.csv"))){
+    if(file.exists(paste0(save.dir, "/indicies.csv"))){
         temp=read.csv(file = paste0(save.dir, "/indicies.csv"))
         indicies=rbind(temp, indicies)
-        write.csv(x=temp, file = paste0(save.dir, "/indicies.csv"), row.names = F)
+        write.csv(x=indicies, file = paste0(save.dir, "/indicies.csv"), row.names = F)
     }
 }
