@@ -1,4 +1,4 @@
-bulk.plot=function(eem.folder){
+bulk.plot=function(eem.folder, rayliegh.mask=T){
 
     ## Bulk EEM plotting
     eems=list.files(path = eem.folder, pattern = "_c.csv", recursive = T, full.names = T) #find all corrected files
@@ -11,7 +11,13 @@ bulk.plot=function(eem.folder){
 
 
     #this bit plots them all
-    lapply(seq(length(eems)), function(x) eem.plot(corr.eem = read.corr.eem(eems[x]),
-                                                   sample.name = names[x],
-                                                   save.dir = save.dir))
+    if(rayliegh.mask){
+        lapply(seq(length(eems)), function(x) eem.plot(corr.eem = fluoro::rayleigh.mask(eem=read.corr.eem(eems[x]), mask.value = 0),
+                                                       sample.name = names[x],
+                                                       save.dir = save.dir))
+    }else if(rayliegh.mask==F){
+        lapply(seq(length(eems)), function(x) eem.plot(corr.eem = read.corr.eem(eems[x]),
+                                                       sample.name = names[x],
+                                                       save.dir = save.dir))
+    }
 }
