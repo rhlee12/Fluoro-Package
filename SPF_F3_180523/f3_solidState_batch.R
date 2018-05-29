@@ -1,4 +1,5 @@
 ### batch ss correct
+
 em.corr.file = "../info/PARAFAC/Correction Files for McKnight Fluorometers/fl3_mcorrect_300_550_2.xls"
 ex.corr.file = "../info/PARAFAC/Correction Files for McKnight Fluorometers/fl3_xcorrect_240_450_10.xls"
 

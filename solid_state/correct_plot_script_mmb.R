@@ -12,12 +12,12 @@ library(fluoro)
 
 options(stringsAsFactors = F)
 
-input=readxl::read_excel(path = "../F4SPF_LOG SHEET_BBWM_180516.xlsx")
+input=readxl::read_excel(path = "../F3SPF_LOG SHEET_BBWM_180523.xlsx")
 #View(input)
 
 input$Blank=stringr::str_split(input$Blank, pattern = ", ")
 
-save.dir="../180516/corrected/"
+save.dir="../SPF_F3_180523/corrected/"
 if(!dir.exists(save.dir)){dir.create(save.dir)}
 
 for(i in 1:nrow(input)){
