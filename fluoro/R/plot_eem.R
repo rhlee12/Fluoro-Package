@@ -37,15 +37,17 @@ eem.plot=function(corr.eem, sample.name, save.dir){
     #get rid of melting artefacts
     test$variable=as.character(gsub(pattern = "X", replacement = "", x = test$variable))
     colnames(test)=c("Emission", "Excitation", "Value")
-    test$Emission=as.numeric(test$Emission)
+    test$Emission=as.numeric(as.character(test$Emission))
     test$Excitation=as.numeric(test$Excitation)
 
+    xo=seq(from=test$Emission[1], to=test$Emission[length(test$Emission)],length.out = 200)
+    yo = seq(from=test$Excitation[1], to=test$Excitation[length(test$Excitation)],length.out = 200)
     gdat=akima::interp(x = test$Emission,
                        y=test$Excitation,
                        z = test$Value,
                        duplicate = "mean",
-                       xo = seq(from=test$Emission[1], to=test$Emission[length(test$Emission)],length.out = 200),
-                       yo = seq(from=test$Excitation[1], to=test$Excitation[length(test$Excitation)],length.out = 200)
+                       xo = xo,
+                       yo = yo
     )
 
     gdat=data.frame(akima::interp2xyz(gdat, data.frame = T))
@@ -56,6 +58,7 @@ eem.plot=function(corr.eem, sample.name, save.dir){
         ggplot2::geom_contour(color = "white", alpha = 0.5, bins=40) +
         ggplot2::scale_fill_distiller(palette="Spectral", na.value="white") +
         ggplot2::theme_light()+
+        #ggplot2::scale_x_continuous(limits = c(300, 550))+
         ggplot2::xlab("Emission wavelength (nm)")+
         ggplot2::ylab("Excitation wavelength (nm)")+
         ggplot2::ggtitle(sample.name)+
