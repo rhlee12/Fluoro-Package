@@ -53,7 +53,7 @@ solid.combo.correct=function(eem.dir, combo.file, f3.eem=F, em.corr.file, ex.cor
             print(corrections)
             out=sample
 
-            for(c in 1:length(corrections)){
+            for(c in 1:length(unlist(corrections))){
                 print(paste0("Issue:",unlist(corrections)[c]))
                 temp=fluoro::read.f3.eem(paste0(eem.dir, "/", unlist(corrections)[c], ".xls"))
                 out=out-fluoro:::em.ex.corr(eem = temp, em.corr.file = em.corr.file, ex.corr.file = ex.corr.file)
@@ -68,7 +68,7 @@ solid.combo.correct=function(eem.dir, combo.file, f3.eem=F, em.corr.file, ex.cor
             print(corrections)
             out=sample
 
-            for(c in 1:length(corrections)){
+            for(c in 1:length(unlist(corrections))){
                 print(paste0("Issue:",unlist(corrections)[c]))
                 out=out-read.raw.eem(paste0(eem.dir, "/", unlist(corrections)[c], ".dat"))
             }
