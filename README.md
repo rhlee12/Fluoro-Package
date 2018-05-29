@@ -11,7 +11,7 @@ RStudio: https://www.rstudio.com/products/rstudio/download/ (free version)
 
 ## Current Installable Package
 
-The current version of the package can be installed by saving the `fluoro_0.1.3.tar.gz` file to your computer, then running the following command in the R console:  
+The current version of the package can be installed by saving the `fluoro_0.1.7.tar.gz` file to your computer, then running the following command in the R console:  
 
 `install.packages(file.choose(), repos=NULL, type="source")`
 
