@@ -8,3 +8,4 @@ out=fluoro::solid.combo.correct(eem.dir = "../SPF_F3_180523/", combo.file = "../
 ## You don't need this info, it is just here to make life easier for workflows in the future
 
 fluoro::eem.grid.plot(corr.dir = out$corr.dir, combo.file = "../F3SPF_LOG SHEET_BBWM_180523.xlsx")
+

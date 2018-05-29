@@ -17,19 +17,12 @@
 
 rayleigh.mask=function(eem, mask.value=0){
 
-    # if(is.na(mask.value)){
-    #     mask.value=0
-    #     warning("Sorry! NA's cannot be used for masking. Defaulting to 0.")
-    #     }
-
     pri.math=function(x){(base::trunc(0.95*x*10^-1)/10^-1)-20}
-    sec.math=function(x){(base::trunc(1.7*x*10^-1)/10^-1)+90}
+    sec.math=function(x){(base::trunc(1.7*x*10^-1)/10^-1)+65}
 
     logi.matrix=as.data.frame(matrix(data=TRUE, nrow = dim(eem)[1], ncol=dim(eem)[2]))
     rownames(logi.matrix)=rownames(eem)
     colnames(logi.matrix)=colnames(eem)
-
-
 
     for(i in 1:nrow(logi.matrix)){
         for(j in 1:ncol(logi.matrix)){
@@ -56,7 +49,4 @@ rayleigh.mask=function(eem, mask.value=0){
         }
     }
 return(eem)
-
-    #fluoro::eem.plot(eem, "test", tempdir())
-
 }
