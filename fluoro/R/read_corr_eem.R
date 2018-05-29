@@ -2,7 +2,7 @@
 #'
 #' @author Robert Lee
 #'
-#' @details This file reads in the correct EEMs produced by "f4.eem.correct",
+#' @details This file reads in the corrected EEMs produced by "f4.eem.correct",
 #' and correctly formats it for use with other functions in the 'fluoro' package.
 #'
 #' @param \code{file} - A character path pointing to the corrected eem file.

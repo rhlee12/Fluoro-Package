@@ -14,7 +14,7 @@ File should be a CSV, typically output by the f4.eem.correct function.}
 A properly formatted EEM, as a data frame.
 }
 \details{
-This file reads in the correct EEMs produced by "f4.eem.correct",
+This file reads in the corrected EEMs produced by "f4.eem.correct",
 and correctly formats it for use with other functions in the 'fluoro' package.
 }
 \author{

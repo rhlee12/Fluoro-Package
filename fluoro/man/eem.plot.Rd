@@ -4,7 +4,7 @@
 \alias{eem.plot}
 \title{Plot a corrected EEM}
 \usage{
-eem.plot(corr.eem, sample.name, save.dir)
+eem.plot(corr.eem, sample.name, save.dir, white.mask = F)
 }
 \arguments{
 \item{\code{corr.eem}}{- A corrected EEM}

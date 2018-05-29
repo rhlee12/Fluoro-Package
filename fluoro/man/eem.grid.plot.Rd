@@ -4,7 +4,7 @@
 \alias{eem.grid.plot}
 \title{Generate a Grid of Solid State Corrected EEM Plots}
 \usage{
-eem.grid.plot(corr.dir, combo.file)
+eem.grid.plot(corr.dir, combo.file, white.mask = T)
 }
 \arguments{
 \item{\code{corr.dir}}{- The directory where corrected EEMs live}

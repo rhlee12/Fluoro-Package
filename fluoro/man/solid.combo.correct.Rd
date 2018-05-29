@@ -4,7 +4,8 @@
 \alias{solid.combo.correct}
 \title{Batch Correcrt Solid State EEMs with Specifierd Combinations}
 \usage{
-solid.combo.correct(eem.dir, combo.file)
+solid.combo.correct(eem.dir, combo.file, f3.eem = F, em.corr.file,
+  ex.corr.file)
 }
 \arguments{
 \item{\code{corr.dir}}{- The directory where corrected EEMs live}

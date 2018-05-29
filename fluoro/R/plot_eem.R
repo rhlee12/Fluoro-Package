@@ -20,7 +20,7 @@
 #' @export
 #'
 
-eem.plot=function(corr.eem, sample.name, save.dir){
+eem.plot=function(corr.eem, sample.name, save.dir, white.mask=F){
 
     library(ggplot2)
     library(akima)
@@ -52,6 +52,10 @@ eem.plot=function(corr.eem, sample.name, save.dir){
 
     gdat=data.frame(akima::interp2xyz(gdat, data.frame = T))
 
+    if(white.mask){
+        gdat[gdat==0]=NA
+    }
+
     eem.plot=ggplot2::ggplot(data=gdat)+ggplot2::aes(x = x, y = y, z = z, fill = z, name="") +
         ggplot2::geom_tile() +
         ggplot2::coord_equal() +
@@ -66,7 +70,7 @@ eem.plot=function(corr.eem, sample.name, save.dir){
         ggplot2::theme(aspect.ratio=1)
     if(!missing(save.dir)){
         if(dir.exists(save.dir)){
-            ggplot2::ggsave(plot = eem.plot, filename = paste0(sample.name, ".png"), device = "png", path = save.dir, dpi = 600)
+            ggplot2::ggsave(plot = eem.plot, filename = paste0(sample.name, ".png"), device = "png", path = save.dir, dpi = 600, width = 8, height = 8, units = "in")
         }
         if(!dir.exists(save.dir)){
             message("Invalid save directory- please check your save directory and try again.")

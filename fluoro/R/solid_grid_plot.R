@@ -26,7 +26,13 @@
 #' @export
 #'
 
-eem.grid.plot=function(corr.dir, combo.file){
+eem.grid.plot=function(corr.dir, combo.file, white.mask=T){
+    if(grepl(pattern = ".csv", x = combo.file, ignore.case = T)){
+        input=read.csv(file = combo.file)
+    }else{
+        message("Function assuming combo.file is an Excel file... (make sure you are pointing to a CSV or XLS file)")
+        input=readxl::read_excel(path = combo.file)
+    }
 
     corrected=list.files(path=corr.dir)
     grouping=data.frame(group=input$`Name of Raw EEM`,
@@ -45,7 +51,7 @@ eem.grid.plot=function(corr.dir, combo.file){
         make.plot=function(info){
             p.eem=read.corr.eem(file = info$files)
             p.eem.out=rayleigh.mask(p.eem)
-            eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = corr.dir)
+            eem.plot=eem.plot(corr.eem = p.eem.out, sample.name = info$name, save.dir = corr.dir, white.mask = white.mask)
             return(eem.plot)
         }
 

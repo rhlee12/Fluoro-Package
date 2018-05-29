@@ -29,7 +29,7 @@
 #' @export
 #'
 
-solid.combo.correct=function(eem.dir, combo.file){
+solid.combo.correct=function(eem.dir, combo.file, f3.eem=F, em.corr.file, ex.corr.file){
     options(stringsAsFactors = F)
 
     if(grepl(pattern = ".csv", x = combo.file, ignore.case = T)){
@@ -37,7 +37,6 @@ solid.combo.correct=function(eem.dir, combo.file){
     }else{
         message("Function assuming combo.file is an Excel file... (make sure you are pointing to a CSV or XLS file)")
         input=readxl::read_excel(path = combo.file)
-
     }
 
     input$Blank=stringr::str_split(input$Blank, pattern = ", ")
@@ -46,20 +45,36 @@ solid.combo.correct=function(eem.dir, combo.file){
     if(!dir.exists(save.dir)){dir.create(save.dir)}
 
     for(i in 1:nrow(input)){
-        #print(paste0("ROW ", i))
-        #print(input$`Name of Raw EEM`[i])
+        if(f3.eem){
+            sample=fluoro::read.f3.eem(f3.eem.file = paste0(eem.dir, "/", input$`Name of Raw EEM`[i], ".xls"))
+            sample=fluoro:::em.ex.corr(eem = sample, em.corr.file = em.corr.file, ex.corr.file = ex.corr.file)
 
-        sample=fluoro::read.raw.eem(file = paste0(eem.dir, "/", input$`Name of Raw EEM`[i], ".dat"))
-        corrections=input$Blank[i]
-        print(corrections)
-        out=sample
+            corrections=input$Blank[i]
+            print(corrections)
+            out=sample
 
-        for(c in 1:length(corrections)){
-            print(paste0("Issue:",unlist(corrections)[c]))
-            out=out-read.raw.eem(paste0(eem.dir, "/", unlist(corrections)[c], ".dat"))
+            for(c in 1:length(corrections)){
+                print(paste0("Issue:",unlist(corrections)[c]))
+                temp=fluoro::read.f3.eem(paste0(eem.dir, "/", unlist(corrections)[c], ".xls"))
+                out=out-fluoro:::em.ex.corr(eem = temp, em.corr.file = em.corr.file, ex.corr.file = ex.corr.file)
+            }
+            save.name=input$`Corrected Name`[i]
+            write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
         }
-        save.name=input$`Corrected Name`[i]
-        write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
+
+        if(!f3.eem){
+            sample=fluoro::read.raw.eem(file = paste0(eem.dir, "/", input$`Name of Raw EEM`[i], ".dat"))
+            corrections=input$Blank[i]
+            print(corrections)
+            out=sample
+
+            for(c in 1:length(corrections)){
+                print(paste0("Issue:",unlist(corrections)[c]))
+                out=out-read.raw.eem(paste0(eem.dir, "/", unlist(corrections)[c], ".dat"))
+            }
+            save.name=input$`Corrected Name`[i]
+            write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
+        }
 
 
     }
