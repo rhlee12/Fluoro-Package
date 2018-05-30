@@ -60,6 +60,7 @@ solid.combo.correct=function(eem.dir, combo.file, f3.eem=F, em.corr.file, ex.cor
             }
             save.name=input$`Corrected Name`[i]
             write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
+            fluoro::solid.indicies(corr.eem = out, save.dir = save.dir, sample = save.name)
         }
 
         if(!f3.eem){
@@ -74,6 +75,7 @@ solid.combo.correct=function(eem.dir, combo.file, f3.eem=F, em.corr.file, ex.cor
             }
             save.name=input$`Corrected Name`[i]
             write.csv(out, file = paste0(save.dir, "/", save.name, ".csv"), row.names = T)
+            fluoro::solid.indicies(corr.eem = out, save.dir = save.dir, sample = save.name)
         }
 
 
