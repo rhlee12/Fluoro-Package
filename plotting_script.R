@@ -1,5 +1,4 @@
 
-(eem.dir, names)
 ## Bulk EEM plotting
 eems=list.files("../example_data/GRSM/corrected/", pattern = "_c.csv", recursive = T, full.names = T) #find all corrected files
 names=stringr::str_split(string = eems, pattern = "/") #get names of files
