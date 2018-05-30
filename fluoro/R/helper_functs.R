@@ -74,3 +74,20 @@ em.ex.corr=function(eem, em.corr.file, ex.corr.file){
 
     return(ic.eem)
 }
+
+
+mask.300=function(eem.dir){
+    eems=list.files(path = eem.dir, pattern = "_c.csv", recursive = T, full.names = T) #find all corrected files
+    load.eems=lapply(eems, fluoro::read.corr.eem)
+
+    sub.300=function(x){
+        x["300","300"]=((x["300", "290"]+x["300", "310"])/2)
+        return(x)
+    }
+
+    fixed.eems=lapply(load.eems, sub.300)
+
+    for(i in 1:length(fixed.eems)){
+        write.csv(fixed.eems[[i]], file = eems[i], row.names = T)
+    }
+}
